@@ -1,0 +1,25 @@
+{
+  "name": "tienda-demo",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Catálogo y carrito de la tienda online de Cerámica Demo.",
+  "type": "module",
+  "packageManager": "bun@1.4.2",
+  "scripts": {
+    "dev": "bun --hot src/index.ts",
+    "start": "bun src/index.ts",
+    "db:seed": "bun scripts/seed.ts",
+    "test": "bun test",
+    "typecheck": "tsc --noEmit",
+    "lint": "biome check .",
+    "format": "biome check --write ."
+  },
+  "dependencies": {
+    "hono": "4.13.20"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.6.8",
+    "@types/bun": "1.4.5",
+    "typescript": "7.0.2"
+  }
+}
