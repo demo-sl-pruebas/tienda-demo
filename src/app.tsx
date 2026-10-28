@@ -12,6 +12,7 @@ import { listarProductos, obtenerProducto } from './catalogo';
 import { ESTILOS } from './estilos';
 import { Catalogo } from './vistas/Catalogo';
 import { FichaProducto } from './vistas/FichaProducto';
+import { PaginaCarrito } from './vistas/PaginaCarrito';
 
 const COOKIE_CARRITO = 'carrito';
 
@@ -40,6 +41,22 @@ export function crearApp(db: Database) {
     const producto = obtenerProducto(db, c.req.param('slug'));
     if (!producto) return c.notFound();
     return c.html(<FichaProducto producto={producto} />);
+  });
+
+  app.get('/carrito', (c) => {
+    const lineas = leerCarrito(db, c.get('carritoId'));
+    return c.html(<PaginaCarrito lineas={lineas} totales={calcularTotales(lineas)} />);
+  });
+
+  app.post('/carrito', async (c) => {
+    const form = await c.req.parseBody();
+    try {
+      anadirAlCarrito(db, c.get('carritoId'), String(form.slug), Number(form.cantidad ?? 1));
+    } catch (error) {
+      if (error instanceof ErrorCarrito) return c.text(error.message, 400);
+      throw error;
+    }
+    return c.redirect('/carrito', 303);
   });
 
   // API JSON

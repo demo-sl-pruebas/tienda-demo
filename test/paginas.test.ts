@@ -19,4 +19,19 @@ describe('páginas', () => {
     expect(html).not.toContain('Añadir al carrito');
   });
 
+  test('añadir desde el formulario redirige al carrito con el total', async () => {
+    const app = crearApp(bdDePrueba());
+    const cookie = 'carrito=prueba-2';
+    const alta = await app.request('/carrito', {
+      method: 'POST',
+      headers: { Cookie: cookie },
+      body: new URLSearchParams({ slug: 'jarron-alto-cal', cantidad: '1' }),
+    });
+    expect(alta.status).toBe(303);
+    const html = texto(
+      await (await app.request('/carrito', { headers: { Cookie: cookie } })).text(),
+    );
+    expect(html).toContain('Jarrón alto Cal');
+    expect(html).toContain('53,95 €');
+  });
 });
