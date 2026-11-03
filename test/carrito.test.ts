@@ -29,6 +29,10 @@ describe('calcularTotales', () => {
     expect(t.totalCentimos).toBe(2900 + COSTE_ENVIO_CENTIMOS);
   });
 
+  test('con 60 € exactos el envío es gratis', () => {
+    const t = calcularTotales([{ producto: { ...taza, precioCentimos: 3000 }, cantidad: 2 }]);
+    expect(t.envioCentimos).toBe(0);
+  });
 });
 
 describe('anadirAlCarrito', () => {

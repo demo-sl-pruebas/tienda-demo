@@ -2,7 +2,7 @@ import type { Database } from 'bun:sqlite';
 import { obtenerProducto } from './catalogo';
 import type { LineaCarrito } from './tipos';
 
-/** Por encima de este subtotal el envío es gratuito. */
+/** A partir de este subtotal (incluido) el envío es gratuito. */
 export const ENVIO_GRATIS_DESDE_CENTIMOS = 6000;
 export const COSTE_ENVIO_CENTIMOS = 495;
 export const MAX_UNIDADES_POR_LINEA = 10;
@@ -18,7 +18,7 @@ export function calcularTotales(lineas: LineaCarrito[]): Totales {
   const subtotalCentimos = lineas.reduce((s, l) => s + l.producto.precioCentimos * l.cantidad, 0);
   const unidades = lineas.reduce((s, l) => s + l.cantidad, 0);
   const envioCentimos =
-    unidades === 0 || subtotalCentimos > ENVIO_GRATIS_DESDE_CENTIMOS ? 0 : COSTE_ENVIO_CENTIMOS;
+    unidades === 0 || subtotalCentimos >= ENVIO_GRATIS_DESDE_CENTIMOS ? 0 : COSTE_ENVIO_CENTIMOS;
   return {
     subtotalCentimos,
     envioCentimos,
