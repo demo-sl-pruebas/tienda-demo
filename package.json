@@ -1,6 +1,6 @@
 {
   "name": "tienda-demo",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "private": true,
   "description": "Catálogo y carrito de la tienda online de Cerámica Demo.",
   "type": "module",
