@@ -21,11 +21,24 @@ function aProducto(fila: FilaProducto): Producto {
   };
 }
 
-export function listarProductos(db: Database): Producto[] {
+export function listarProductos(db: Database, categoria?: string): Producto[] {
+  if (categoria) {
+    return db
+      .query<FilaProducto, [string]>('SELECT * FROM productos WHERE categoria = ? ORDER BY nombre')
+      .all(categoria)
+      .map(aProducto);
+  }
   return db
     .query<FilaProducto, []>('SELECT * FROM productos ORDER BY categoria, nombre')
     .all()
     .map(aProducto);
+}
+
+export function listarCategorias(db: Database): string[] {
+  return db
+    .query<{ categoria: string }, []>('SELECT DISTINCT categoria FROM productos ORDER BY categoria')
+    .all()
+    .map((f) => f.categoria);
 }
 
 export function obtenerProducto(db: Database, slug: string): Producto | undefined {

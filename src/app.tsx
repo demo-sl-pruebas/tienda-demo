@@ -60,7 +60,10 @@ export function crearApp(db: Database) {
   });
 
   // API JSON
-  app.get('/api/productos', (c) => c.json({ productos: listarProductos(db) }));
+  // TODO: falta el selector de categorías en la página del catálogo y sus tests.
+  app.get('/api/productos', (c) =>
+    c.json({ productos: listarProductos(db, c.req.query('categoria') || undefined) }),
+  );
 
   app.get('/api/productos/:slug', (c) => {
     const producto = obtenerProducto(db, c.req.param('slug'));
