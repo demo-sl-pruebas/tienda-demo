@@ -20,7 +20,8 @@ Usamos [Conventional Commits](https://www.conventionalcommits.org/es/) en españ
 1. Abre un PR contra `main` y rellena la plantilla.
 2. El título del PR debe seguir Conventional Commits: al fusionar se usa como mensaje del commit.
 3. Tienen que pasar las comprobaciones `lint`, `typecheck` y `test`, y hace falta una aprobación.
-4. Se fusiona **solo con «Squash and merge»**; la rama se borra después.
+4. Se fusiona **solo con «Squash and merge»** a través de la **cola de fusión** («Merge when ready»):
+   GitHub vuelve a pasar las comprobaciones sobre `main` más el PR antes de fusionarlo. La rama se borra después.
 
 ## Despliegue
 
